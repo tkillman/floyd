@@ -105,7 +105,7 @@ const FloydComponent = () => {
       ></div>
       <ButtonWrapper>
         <StyledButton type="button" onClick={onClickFloyd}>
-          최단 경로를 구해줘!!
+          최단 거리를 구해줘!!
         </StyledButton>
       </ButtonWrapper>
       {isLoading && <div>계산 중...</div>}
