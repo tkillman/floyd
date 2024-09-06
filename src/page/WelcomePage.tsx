@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
-import {
-  AppWrapper,
-  HeaderArea,
-  InputWrapper,
-  StyledH2,
-} from '~/src/page/WelcomePage.style';
 
 import CanvasComponent, { RefCanvasComponent } from '~/src/ui/CanvasComponent';
 import InputComponent from '~/src/ui/InputComponent';
 import useDevice from '~/src/lib/device';
 import FloydComponent from '~/src/ui/FloydComponent';
+import {
+  HeaderArea,
+  InputWrapper,
+  PageWrapper,
+  StyledH2,
+} from './common/page.style';
 
 const WelcomePage = () => {
   const refHeader = useRef<HTMLDivElement>(null);
@@ -30,6 +30,7 @@ const WelcomePage = () => {
     }
     refCanvas.current?.draw(count);
   };
+
   useEffect(() => {
     if (isPc) {
       setCanvasWidth(600);
@@ -42,7 +43,7 @@ const WelcomePage = () => {
   }, [isPc]);
 
   return (
-    <AppWrapper>
+    <PageWrapper>
       <HeaderArea ref={refHeader}>
         <StyledH2>플로이드-워셜 알고리즘 시각화</StyledH2>
         <InputWrapper>
@@ -55,7 +56,7 @@ const WelcomePage = () => {
         canvasHeight={canvasHeight}
       />
       <FloydComponent />
-    </AppWrapper>
+    </PageWrapper>
   );
 };
 

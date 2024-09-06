@@ -46,7 +46,11 @@ const InputComponent: React.ForwardRefRenderFunction<
     props.handleDraw?.(Number(count ? count : 0));
   };
 
-  const onKeyDownCount = () => {};
+  const onKeyDownCount: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
+    if (e.key === 'Enter') {
+      onClickDraw();
+    }
+  };
 
   return (
     <InputComponentWrapper>
@@ -58,11 +62,7 @@ const InputComponent: React.ForwardRefRenderFunction<
         max={MAX_VALUE}
         value={count}
         onChange={onChangeCount}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            onClickDraw();
-          }
-        }}
+        onKeyDown={onKeyDownCount}
       />
       <Button type="button" onClick={onClickDraw} disabled={!count}>
         그래프 그리기
