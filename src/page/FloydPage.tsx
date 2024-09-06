@@ -1,27 +1,35 @@
 import { useEffect, useRef, useState } from 'react';
-import CanvasComponent, {
-  RefCanvasComponent,
-} from '../ui/dijkstra/CanvasComponent';
-import InputComponent from '../ui/InputComponent';
+
+import CanvasComponent, { RefCanvasComponent } from '~/src/ui/CanvasComponent';
+import InputComponent from '~/src/ui/InputComponent';
+import useDevice from '~/src/lib/device';
+import FloydComponent from '~/src/ui/floyd/FloydComponent';
 import {
   HeaderArea,
   InputWrapper,
   PageWrapper,
   StyledH2,
 } from './common/page.style';
-import useDevice from '../lib/device';
-import DijkstraComponent from '../ui/dijkstra/DijkstraComponent';
-import useDrawNoDirection from '../application/service/canvas/drawNoDirection.service';
+import { RoutePath, routePathName } from '../domain/route.domain';
+import useDrawDirection from '../application/service/canvas/drawDirection.service';
+import { DrawService } from '../application/service/canvas/draw.service.type';
 
-const DijkstraPage = () => {
+const FloydPage = () => {
   const refHeader = useRef<HTMLDivElement>(null);
-  //const refInput = useRef<RefInputComponent>(null);
   const refCanvas = useRef<RefCanvasComponent>(null);
 
   const [canvasWidth, setCanvasWidth] = useState<number>(0);
   const [canvasHeight, setCanvasHeight] = useState<number>(0);
 
   const { isPc } = useDevice();
+
+  const handleDraw = (count: number) => {
+    if (!count) {
+      console.log('count is empty');
+      return;
+    }
+    refCanvas.current?.draw(count);
+  };
 
   useEffect(() => {
     if (isPc) {
@@ -34,20 +42,12 @@ const DijkstraPage = () => {
     }
   }, [isPc]);
 
-  const handleDraw = (count: number) => {
-    if (!count) {
-      console.log('count is empty');
-      return;
-    }
-    refCanvas.current?.draw(count);
-  };
-
-  const drawService = useDrawNoDirection();
+  const drawService: DrawService = useDrawDirection();
 
   return (
     <PageWrapper>
       <HeaderArea ref={refHeader}>
-        <StyledH2>다익스트라 알고리즘 시각화</StyledH2>
+        <StyledH2>{routePathName(RoutePath.FL)}</StyledH2>
         <InputWrapper>
           <InputComponent handleDraw={handleDraw} />
         </InputWrapper>
@@ -58,9 +58,9 @@ const DijkstraPage = () => {
         canvasHeight={canvasHeight}
         drawService={drawService}
       />
-      <DijkstraComponent />
+      <FloydComponent />
     </PageWrapper>
   );
 };
 
-export default DijkstraPage;
+export default FloydPage;

@@ -1,11 +1,11 @@
 import { useRecoilValue } from 'recoil';
-import { matrixState } from '../repository/matrix.recoil';
+import { matrixState } from '~/src/repository/matrix.recoil';
 import DOMPurify from 'dompurify';
-import { Matrix } from '../domain/matrix.domain';
+import { Matrix } from '~/src/domain/matrix.domain';
 import { useCallback, useEffect, useState } from 'react';
 import { produce } from 'immer';
 import { ButtonWrapper, FloydComponentWrapper } from './FloydComponent.style';
-import { Button } from './common/Button.style';
+import { Button } from '~/src/ui/common/Button.style';
 
 const FloydComponent = () => {
   const matrix = useRecoilValue(matrixState);

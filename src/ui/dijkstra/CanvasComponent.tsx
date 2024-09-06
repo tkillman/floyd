@@ -6,6 +6,7 @@ import {
   useState,
 } from 'react';
 import { StyledCanvas } from './CanvasComponent.style';
+
 import { useResetRecoilState } from 'recoil';
 import { matrixState } from '~/src/repository/matrix.recoil';
 import { DrawService } from '~/src/application/service/canvas/draw.service.type';
@@ -25,7 +26,6 @@ const CanvasComponent: React.ForwardRefRenderFunction<
   Props
 > = ({ canvasWidth, canvasHeight, drawService }, ref) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
   const [ctx, setCtx] = useState<CanvasRenderingContext2D>();
 
   const resetMatrixState = useResetRecoilState(matrixState);

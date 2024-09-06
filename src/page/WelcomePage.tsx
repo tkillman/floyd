@@ -1,15 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 
-import CanvasComponent, { RefCanvasComponent } from '~/src/ui/CanvasComponent';
+import CanvasComponent, {
+  RefCanvasComponent,
+} from '~/src/ui/dijkstra/CanvasComponent';
 import InputComponent from '~/src/ui/InputComponent';
 import useDevice from '~/src/lib/device';
-import FloydComponent from '~/src/ui/FloydComponent';
+import FloydComponent from '~/src/ui/floyd/FloydComponent';
 import {
   HeaderArea,
   InputWrapper,
   PageWrapper,
   StyledH2,
 } from './common/page.style';
+import { RoutePath, routePathName } from '../domain/route.domain';
+import useDrawNoDirection from '../application/service/canvas/drawNoDirection.service';
+import { DrawService } from '../application/service/canvas/draw.service.type';
 
 const WelcomePage = () => {
   const refHeader = useRef<HTMLDivElement>(null);
@@ -38,14 +43,16 @@ const WelcomePage = () => {
     } else {
       const headerHeight = refHeader.current?.getBoundingClientRect().height;
       setCanvasWidth(window.innerWidth);
-      setCanvasHeight(window.innerHeight - headerHeight! - 5);
+      setCanvasHeight(window.innerHeight - headerHeight! - 5); // 5px gap
     }
   }, [isPc]);
+
+  const drawService: DrawService = useDrawNoDirection();
 
   return (
     <PageWrapper>
       <HeaderArea ref={refHeader}>
-        <StyledH2>플로이드-워셜 알고리즘 시각화</StyledH2>
+        <StyledH2>{routePathName(RoutePath.WELCOME)}</StyledH2>
         <InputWrapper>
           <InputComponent handleDraw={handleDraw} />
         </InputWrapper>
@@ -54,6 +61,7 @@ const WelcomePage = () => {
         ref={refCanvas}
         canvasWidth={canvasWidth}
         canvasHeight={canvasHeight}
+        drawService={drawService}
       />
       <FloydComponent />
     </PageWrapper>
