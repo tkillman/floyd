@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import CanvasComponent, {
   RefCanvasComponent,
-} from '../ui/dijkstra/CanvasComponent';
+} from '~/src/ui/common/CanvasComponent';
 import InputComponent from '../ui/InputComponent';
 import {
   HeaderArea,
@@ -12,6 +12,7 @@ import {
 import useDevice from '../lib/device';
 import DijkstraComponent from '../ui/dijkstra/DijkstraComponent';
 import useDrawNoDirection from '../application/service/canvas/drawNoDirection.service';
+import { RoutePath, routePathName } from '../domain/route.domain';
 
 const DijkstraPage = () => {
   const refHeader = useRef<HTMLDivElement>(null);
@@ -47,7 +48,7 @@ const DijkstraPage = () => {
   return (
     <PageWrapper>
       <HeaderArea ref={refHeader}>
-        <StyledH2>다익스트라 알고리즘 시각화</StyledH2>
+        <StyledH2>{routePathName(RoutePath.DI)}</StyledH2>
         <InputWrapper>
           <InputComponent handleDraw={handleDraw} />
         </InputWrapper>

@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
-import CanvasComponent, { RefCanvasComponent } from '~/src/ui/CanvasComponent';
+import CanvasComponent, {
+  RefCanvasComponent,
+} from '~/src/ui/common/CanvasComponent';
 import InputComponent from '~/src/ui/InputComponent';
 import useDevice from '~/src/lib/device';
 import FloydComponent from '~/src/ui/floyd/FloydComponent';
@@ -23,14 +25,6 @@ const FloydPage = () => {
 
   const { isPc } = useDevice();
 
-  const handleDraw = (count: number) => {
-    if (!count) {
-      console.log('count is empty');
-      return;
-    }
-    refCanvas.current?.draw(count);
-  };
-
   useEffect(() => {
     if (isPc) {
       setCanvasWidth(600);
@@ -41,6 +35,14 @@ const FloydPage = () => {
       setCanvasHeight(window.innerHeight - headerHeight! - 5);
     }
   }, [isPc]);
+
+  const handleDraw = (count: number) => {
+    if (!count) {
+      console.log('count is empty');
+      return;
+    }
+    refCanvas.current?.draw(count);
+  };
 
   const drawService: DrawService = useDrawDirection();
 

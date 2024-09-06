@@ -1,8 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 
-import CanvasComponent, {
-  RefCanvasComponent,
-} from '~/src/ui/dijkstra/CanvasComponent';
 import InputComponent from '~/src/ui/InputComponent';
 import useDevice from '~/src/lib/device';
 import FloydComponent from '~/src/ui/floyd/FloydComponent';
@@ -15,6 +12,9 @@ import {
 import { RoutePath, routePathName } from '../domain/route.domain';
 import useDrawNoDirection from '../application/service/canvas/drawNoDirection.service';
 import { DrawService } from '../application/service/canvas/draw.service.type';
+import CanvasComponent, {
+  RefCanvasComponent,
+} from '../ui/common/CanvasComponent';
 
 const WelcomePage = () => {
   const refHeader = useRef<HTMLDivElement>(null);
@@ -26,16 +26,6 @@ const WelcomePage = () => {
 
   const { isPc } = useDevice();
 
-  const handleDraw = (count: number) => {
-    //const count = refInput.current?.getCount();
-
-    if (!count) {
-      console.log('count is empty');
-      return;
-    }
-    refCanvas.current?.draw(count);
-  };
-
   useEffect(() => {
     if (isPc) {
       setCanvasWidth(600);
@@ -46,6 +36,16 @@ const WelcomePage = () => {
       setCanvasHeight(window.innerHeight - headerHeight! - 5); // 5px gap
     }
   }, [isPc]);
+
+  const handleDraw = (count: number) => {
+    //const count = refInput.current?.getCount();
+
+    if (!count) {
+      console.log('count is empty');
+      return;
+    }
+    refCanvas.current?.draw(count);
+  };
 
   const drawService: DrawService = useDrawNoDirection();
 

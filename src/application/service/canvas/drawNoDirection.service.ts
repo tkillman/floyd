@@ -32,7 +32,6 @@ const useDrawNoDirection = (): DrawService => {
 
     // 랜덤 간선과 가중치 생성
     const edgeProbability = 0.5;
-
     for (let i = 0; i < nodeCount; i++) {
       for (let j = 0; j < nodeCount; j++) {
         if (i === j) {
