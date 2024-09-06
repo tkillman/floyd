@@ -12,6 +12,9 @@ export default defineConfig(({ mode }) => {
         '~/src': path.resolve(__dirname, 'src'), // @를 src 폴더로 매핑
       },
     },
+    esbuild: {
+      drop: ['console', 'debugger'],
+    },
     server: {
       host: true,
       port: parseInt(process.env.VITE_PORT || '3031'),
