@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { AppWrapper, HeaderArea, InputWrapper, StyledH2 } from './App.style';
 
 import CanvasComponent, { RefCanvasComponent } from './ui/CanvasComponent';
-import InputComponent, { RefInputComponent } from './ui/InputComponent';
+import InputComponent from './ui/InputComponent';
 import useDevice from './lib/device';
 import FloydComponent from './ui/FloydComponent';
 
@@ -32,7 +32,7 @@ const App = () => {
     } else {
       const headerHeight = refHeader.current?.getBoundingClientRect().height;
       setCanvasWidth(window.innerWidth);
-      setCanvasHeight(window.innerHeight - headerHeight!);
+      setCanvasHeight(window.innerHeight - headerHeight! - 5);
     }
   }, [isPc]);
 

@@ -4,7 +4,8 @@ import DOMPurify from 'dompurify';
 import { Matrix } from '../domain/matrix.domain';
 import { useCallback, useEffect, useState } from 'react';
 import { produce } from 'immer';
-import { ButtonWrapper, StyledButton } from './FloydComponent.style';
+import { ButtonWrapper, FloydComponentWrapper } from './FloydComponent.style';
+import { Button } from './common/Button.style';
 
 const FloydComponent = () => {
   const matrix = useRecoilValue(matrixState);
@@ -62,7 +63,6 @@ const FloydComponent = () => {
 
   /**
    * 플로이드 워셜 알고리즘을 수행합니다.
-   * @param matrix
    */
   const floydWarshall = () => {
     setFloydMatrix((prev) =>
@@ -72,10 +72,10 @@ const FloydComponent = () => {
         for (let k = 0; k < nodeCount; k++) {
           for (let i = 0; i < nodeCount; i++) {
             for (let j = 0; j < nodeCount; j++) {
-              const compareValue = draft[i][k] + draft[k][j];
+              const compareWeight = draft[i][k] + draft[k][j];
 
-              if (draft[i][j] > compareValue) {
-                draft[i][j] = compareValue;
+              if (draft[i][j] > compareWeight) {
+                draft[i][j] = compareWeight;
               }
             }
           }
@@ -97,26 +97,26 @@ const FloydComponent = () => {
   }
 
   return (
-    <div>
+    <FloydComponentWrapper>
       <div
         dangerouslySetInnerHTML={{
-          __html: renderMatrixToTable(matrix, '경로 테이블'),
+          __html: renderMatrixToTable(matrix, '거리 테이블'),
         }}
       ></div>
       <ButtonWrapper>
-        <StyledButton type="button" onClick={onClickFloyd}>
+        <Button type="button" onClick={onClickFloyd}>
           최단 거리를 구해줘!!
-        </StyledButton>
+        </Button>
       </ButtonWrapper>
       {isLoading && <div>계산 중...</div>}
       {!isLoading && (
         <div
           dangerouslySetInnerHTML={{
-            __html: renderMatrixToTable(floydMatrix, '최단 경로 테이블'),
+            __html: renderMatrixToTable(floydMatrix, '최단 거리 테이블'),
           }}
         ></div>
       )}
-    </div>
+    </FloydComponentWrapper>
   );
 };
 

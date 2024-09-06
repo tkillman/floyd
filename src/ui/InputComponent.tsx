@@ -1,6 +1,6 @@
 import { forwardRef, useImperativeHandle, useState } from 'react';
-import { StyledInput } from './InputComponent.style';
-
+import { Button, Input } from './common';
+import { InputComponentWrapper } from './InputComponent.style';
 interface Props {
   handleDraw?: (count: number) => void;
 }
@@ -46,21 +46,28 @@ const InputComponent: React.ForwardRefRenderFunction<
     props.handleDraw?.(Number(count ? count : 0));
   };
 
+  const onKeyDownCount = () => {};
+
   return (
-    <div>
-      <label htmlFor="nodeCount">노드 수 입력: </label>
-      <StyledInput
+    <InputComponentWrapper>
+      <label htmlFor="nodeCount">노드 수: </label>
+      <Input
         type="number"
         id="nodeCount"
         min={MIN_VALUE}
         max={MAX_VALUE}
         value={count}
         onChange={onChangeCount}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            onClickDraw();
+          }
+        }}
       />
-      <button type="button" onClick={onClickDraw} disabled={!count}>
+      <Button type="button" onClick={onClickDraw} disabled={!count}>
         그래프 그리기
-      </button>
-    </div>
+      </Button>
+    </InputComponentWrapper>
   );
 };
 
