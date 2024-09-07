@@ -30,14 +30,14 @@ const FloydComponent = () => {
         // 플로이드-워셜 알고리즘
         for (let k = 0; k < nodeCount; k++) {
           // 출발 노드
-          for (let i = 0; i < nodeCount; i++) {
+          for (let a = 0; a < nodeCount; a++) {
             // 도착 노드
-            for (let j = 0; j < nodeCount; j++) {
+            for (let b = 0; b < nodeCount; b++) {
               // i에서 j로 가는 비용과 i에서 k를 거쳐 j로 가는 비용을 비교하여 더 작은 값을 선택
-              const compareWeight = draft[i][k] + draft[k][j];
+              const compareWeight = draft[a][k] + draft[k][b];
 
-              if (draft[i][j] > compareWeight) {
-                draft[i][j] = compareWeight;
+              if (draft[a][b] > compareWeight) {
+                draft[a][b] = compareWeight;
               }
             }
           }
