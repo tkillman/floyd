@@ -1,20 +1,22 @@
 import { useEffect, useRef, useState } from 'react';
-import CanvasComponent, {
-  RefCanvasComponent,
-} from '~/src/ui/common/CanvasComponent';
-import InputComponent from '../ui/InputComponent';
+
+import InputComponent from '~/src/ui/InputComponent';
+import useDevice from '~/src/lib/device';
+import FloydComponent from '~/src/ui/floyd/FloydComponent';
 import {
   HeaderArea,
   InputWrapper,
   PageWrapper,
   StyledH2,
 } from './common/page.style';
-import useDevice from '../lib/device';
-import DijkstraComponent from '../ui/dijkstra/DijkstraComponent';
-import useDrawNoDirection from '../application/service/canvas/drawNoDirection.service';
-import { RoutePath, routePathName } from '../domain/route.domain';
+import { RoutePath, routePathName } from '~/src/domain/route.domain';
+import useDrawNoDirection from '~/src/application/service/canvas/drawNoDirection.service';
+import { DrawService } from '~/src/application/service/canvas/draw.service.type';
+import CanvasComponent, {
+  RefCanvasComponent,
+} from '~/src/ui/common/CanvasComponent';
 
-const DijkstraPage = () => {
+const WelcomePage = () => {
   const refHeader = useRef<HTMLDivElement>(null);
   //const refInput = useRef<RefInputComponent>(null);
   const refCanvas = useRef<RefCanvasComponent>(null);
@@ -31,11 +33,13 @@ const DijkstraPage = () => {
     } else {
       const headerHeight = refHeader.current?.getBoundingClientRect().height;
       setCanvasWidth(window.innerWidth);
-      setCanvasHeight(window.innerHeight - headerHeight! - 5);
+      setCanvasHeight(window.innerHeight - headerHeight! - 5); // 5px gap
     }
   }, [isPc]);
 
   const handleDraw = (count: number) => {
+    //const count = refInput.current?.getCount();
+
     if (!count) {
       console.log('count is empty');
       return;
@@ -43,12 +47,12 @@ const DijkstraPage = () => {
     refCanvas.current?.draw(count);
   };
 
-  const drawService = useDrawNoDirection();
+  const drawService: DrawService = useDrawNoDirection();
 
   return (
     <PageWrapper>
       <HeaderArea ref={refHeader}>
-        <StyledH2>{routePathName(RoutePath.DI)}</StyledH2>
+        <StyledH2>{routePathName(RoutePath.WELCOME)}</StyledH2>
         <InputWrapper>
           <InputComponent handleDraw={handleDraw} />
         </InputWrapper>
@@ -59,9 +63,9 @@ const DijkstraPage = () => {
         canvasHeight={canvasHeight}
         drawService={drawService}
       />
-      <DijkstraComponent />
+      <FloydComponent />
     </PageWrapper>
   );
 };
 
-export default DijkstraPage;
+export default WelcomePage;

@@ -1,23 +1,22 @@
 import { useEffect, useRef, useState } from 'react';
-
 import CanvasComponent, {
   RefCanvasComponent,
 } from '~/src/ui/common/CanvasComponent';
 import InputComponent from '~/src/ui/InputComponent';
-import useDevice from '~/src/lib/device';
-import FloydComponent from '~/src/ui/floyd/FloydComponent';
 import {
   HeaderArea,
   InputWrapper,
   PageWrapper,
   StyledH2,
 } from './common/page.style';
-import { RoutePath, routePathName } from '../domain/route.domain';
-import useDrawDirection from '../application/service/canvas/drawDirection.service';
-import { DrawService } from '../application/service/canvas/draw.service.type';
+import useDevice from '~/src/lib/device';
+import DijkstraComponent from '~/src/ui/dijkstra/DijkstraComponent';
+import useDrawNoDirection from '~/src/application/service/canvas/drawNoDirection.service';
+import { RoutePath, routePathName } from '~/src/domain/route.domain';
 
-const FloydPage = () => {
+const DijkstraPage = () => {
   const refHeader = useRef<HTMLDivElement>(null);
+  //const refInput = useRef<RefInputComponent>(null);
   const refCanvas = useRef<RefCanvasComponent>(null);
 
   const [canvasWidth, setCanvasWidth] = useState<number>(0);
@@ -44,12 +43,12 @@ const FloydPage = () => {
     refCanvas.current?.draw(count);
   };
 
-  const drawService: DrawService = useDrawDirection();
+  const drawService = useDrawNoDirection();
 
   return (
     <PageWrapper>
       <HeaderArea ref={refHeader}>
-        <StyledH2>{routePathName(RoutePath.FL)}</StyledH2>
+        <StyledH2>{routePathName(RoutePath.DI)}</StyledH2>
         <InputWrapper>
           <InputComponent handleDraw={handleDraw} />
         </InputWrapper>
@@ -60,9 +59,9 @@ const FloydPage = () => {
         canvasHeight={canvasHeight}
         drawService={drawService}
       />
-      <FloydComponent />
+      <DijkstraComponent />
     </PageWrapper>
   );
 };
 
-export default FloydPage;
+export default DijkstraPage;

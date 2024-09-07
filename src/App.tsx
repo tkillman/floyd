@@ -1,23 +1,52 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { RoutePath } from './domain/route.domain';
-import { lazy } from 'react';
-import NotFoundPage from './page/NotFoundPage';
+import { lazy, Suspense } from 'react';
+import NotFoundPage from '~/src/ui/page/NotFoundPage';
+import { Loading } from './ui/common/Loading';
 
-const LazyWelcomePage = lazy(() => import('./page/WelcomePage')); // 플로이드 워셜 알고리즘(Eazy)
-const LazyFloydPage = lazy(() => import('./page/FloydPage')); // 플로이드 워셜 알고리즘(Real)
-const LazyDijkstraPage = lazy(() => import('./page/DijkstraPage')); // 다익스트라 알고리즘
+const LazyWelcomePage = lazy(() => import('~/src/ui/page/WelcomePage')); // 플로이드 워셜 알고리즘(Eazy)
+const LazyFloydPage = lazy(() => import('~/src/ui/page/FloydPage')); // 플로이드 워셜 알고리즘(Real)
+const LazyDijkstraPage = lazy(() => import('~/src/ui/page/DijkstraPage')); // 다익스트라 알고리즘
 
 const App = () => {
   return (
     <RecoilRoot>
       <BrowserRouter>
         <Routes>
-          <Route path={RoutePath.WELCOME} element={<LazyWelcomePage />} />
-          <Route path={RoutePath.FL} element={<LazyFloydPage />} />
-          <Route path={RoutePath.DI} element={<LazyDijkstraPage />} />
+          <Route
+            path={RoutePath.WELCOME}
+            element={
+              <Suspense fallback={<Loading />}>
+                <LazyWelcomePage />
+              </Suspense>
+            }
+          />
+          <Route
+            path={RoutePath.FL}
+            element={
+              <Suspense fallback={<Loading />}>
+                <LazyFloydPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path={RoutePath.DI}
+            element={
+              <Suspense fallback={<Loading />}>
+                <LazyDijkstraPage />
+              </Suspense>
+            }
+          />
           {/* 404 Not Found 처리 */}
-          <Route path="*" element={<NotFoundPage />} />
+          <Route
+            path="*"
+            element={
+              <Suspense fallback={<Loading />}>
+                <NotFoundPage />
+              </Suspense>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </RecoilRoot>

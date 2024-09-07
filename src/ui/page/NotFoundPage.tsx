@@ -1,4 +1,4 @@
-import { RoutePath, routePathName } from '../domain/route.domain';
+import { RoutePath, routePathName } from '~/src/domain/route.domain';
 import { NotFoundPageWrapper } from './NotFoundPage.style';
 
 const NotFoundPage = () => {

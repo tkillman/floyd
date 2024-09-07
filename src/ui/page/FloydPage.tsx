@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
+import CanvasComponent, {
+  RefCanvasComponent,
+} from '~/src/ui/common/CanvasComponent';
 import InputComponent from '~/src/ui/InputComponent';
 import useDevice from '~/src/lib/device';
 import FloydComponent from '~/src/ui/floyd/FloydComponent';
@@ -9,16 +12,12 @@ import {
   PageWrapper,
   StyledH2,
 } from './common/page.style';
-import { RoutePath, routePathName } from '../domain/route.domain';
-import useDrawNoDirection from '../application/service/canvas/drawNoDirection.service';
-import { DrawService } from '../application/service/canvas/draw.service.type';
-import CanvasComponent, {
-  RefCanvasComponent,
-} from '../ui/common/CanvasComponent';
+import { RoutePath, routePathName } from '~/src/domain/route.domain';
+import useDrawDirection from '~/src/application/service/canvas/drawDirection.service';
+import { DrawService } from '~/src/application/service/canvas/draw.service.type';
 
-const WelcomePage = () => {
+const FloydPage = () => {
   const refHeader = useRef<HTMLDivElement>(null);
-  //const refInput = useRef<RefInputComponent>(null);
   const refCanvas = useRef<RefCanvasComponent>(null);
 
   const [canvasWidth, setCanvasWidth] = useState<number>(0);
@@ -33,13 +32,11 @@ const WelcomePage = () => {
     } else {
       const headerHeight = refHeader.current?.getBoundingClientRect().height;
       setCanvasWidth(window.innerWidth);
-      setCanvasHeight(window.innerHeight - headerHeight! - 5); // 5px gap
+      setCanvasHeight(window.innerHeight - headerHeight! - 5);
     }
   }, [isPc]);
 
   const handleDraw = (count: number) => {
-    //const count = refInput.current?.getCount();
-
     if (!count) {
       console.log('count is empty');
       return;
@@ -47,12 +44,12 @@ const WelcomePage = () => {
     refCanvas.current?.draw(count);
   };
 
-  const drawService: DrawService = useDrawNoDirection();
+  const drawService: DrawService = useDrawDirection();
 
   return (
     <PageWrapper>
       <HeaderArea ref={refHeader}>
-        <StyledH2>{routePathName(RoutePath.WELCOME)}</StyledH2>
+        <StyledH2>{routePathName(RoutePath.FL)}</StyledH2>
         <InputWrapper>
           <InputComponent handleDraw={handleDraw} />
         </InputWrapper>
@@ -68,4 +65,4 @@ const WelcomePage = () => {
   );
 };
 
-export default WelcomePage;
+export default FloydPage;

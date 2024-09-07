@@ -1,11 +1,11 @@
 import { useRecoilValue } from 'recoil';
 import { matrixState } from '~/src/repository/matrix.recoil';
-import DOMPurify from 'dompurify';
 import { Matrix } from '~/src/domain/matrix.domain';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { produce } from 'immer';
 import { ButtonWrapper, FloydComponentWrapper } from './FloydComponent.style';
 import { Button } from '~/src/ui/common/Button.style';
+import { renderMatrixToTable } from '~/src/lib/dompurifyUtil';
 
 const FloydComponent = () => {
   const matrix = useRecoilValue(matrixState);
@@ -19,47 +19,6 @@ const FloydComponent = () => {
       setFloydMatrix([]);
     };
   }, [matrix]);
-
-  const renderMatrixToTable = useCallback(
-    (paramMatrix: Matrix, title: string) => {
-      const nodeCount = paramMatrix.length;
-
-      if (paramMatrix.length === 0) {
-        return '';
-      }
-
-      let tableHTML = `<h2>${title}</h2>
-    <table>
-    <tr>
-      <th class="diagonal">
-        <span class="top-text">도착</span>  
-        <span class="bottom-text">출발</span>
-      </th>`;
-
-      for (let i = 0; i < nodeCount; i++) {
-        tableHTML += `<th>${i + 1}</th>`;
-      }
-      tableHTML += '</tr>';
-
-      // 행 데이터 작성
-      for (let i = 0; i < nodeCount; i++) {
-        tableHTML += `<tr><th>${i + 1}</th>`;
-        for (let j = 0; j < nodeCount; j++) {
-          tableHTML += `<td>${
-            paramMatrix[i][j] === Infinity ? '무한' : paramMatrix[i][j]
-          }</td>`;
-        }
-        tableHTML += '</tr>';
-      }
-
-      tableHTML += '</table>';
-
-      const sanitizedHtml = DOMPurify.sanitize(tableHTML);
-
-      return sanitizedHtml;
-    },
-    []
-  );
 
   /**
    * 플로이드 워셜 알고리즘을 수행합니다.
