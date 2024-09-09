@@ -18,9 +18,6 @@ const DijkstraComponent = () => {
   const matrix = useRecoilValue(matrixState);
   const refDijkstraMatrix = useRef<Matrix>([]); // 다익스트라 알고리즘을 위한 매트릭스
 
-  const [distancesState, setDistanceState] = useState<Distance>([]); // 거리 저장용도
-  const [pathState, setPathState] = useState<Path>([]); // 경로 저장용도
-
   const refInputStartNodeNum = useRef<HTMLInputElement>(null);
   const [startNodeNum, setStartNodeNum] = useState<string>(''); // 시작 노드 번호
 
@@ -77,25 +74,19 @@ const DijkstraComponent = () => {
   useEffect(() => {
     refDijkstraMatrix.current = matrix;
 
-    const { distances, previous } = dijkstra(0);
-    setDistanceState(distances);
-    const end = matrix.length - 1;
-
-    setPathState(getPath(end, previous));
-
     return () => {
       refDijkstraMatrix.current = [];
     };
-  }, [matrix, dijkstra]);
+  }, [matrix]);
 
   // 경로 추적 함수
-  const getPath = (end: number, previous: Path) => {
-    const path = [];
-    for (let at = end; at !== -1; at = previous[at]) {
-      path.push(at);
-    }
-    return path.reverse();
-  };
+  // const getPath = (end: number, previous: Path) => {
+  //   const path = [];
+  //   for (let at = end; at !== -1; at = previous[at]) {
+  //     path.push(at);
+  //   }
+  //   return path.reverse();
+  // };
 
   const onChangeStartNodeNum = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStartNodeNum(e.target.value);
@@ -116,9 +107,7 @@ const DijkstraComponent = () => {
 
     const start = nodeNum - 1;
 
-    const { distances, previous } = dijkstra(start);
-    setDistanceState(distances);
-    setPathState(getPath(matrix.length - 1, previous));
+    const { distances } = dijkstra(start);
 
     const html = renderDistanceToTable({
       distance: distances,
@@ -131,7 +120,7 @@ const DijkstraComponent = () => {
 
   return (
     <div>
-      <h1>선형탐색</h1>
+      <h2>선형탐색</h2>
       <div
         dangerouslySetInnerHTML={{
           __html: renderMatrixToTable(matrix, '거리 테이블'),

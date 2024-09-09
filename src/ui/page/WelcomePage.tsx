@@ -33,7 +33,7 @@ const WelcomePage = () => {
     } else {
       const headerHeight = refHeader.current?.getBoundingClientRect().height;
       setCanvasWidth(window.innerWidth);
-      setCanvasHeight(window.innerHeight - headerHeight! - 5); // 5px gap
+      setCanvasHeight(window.innerHeight - headerHeight! - 40); // 5px gap
     }
   }, [isPc]);
 

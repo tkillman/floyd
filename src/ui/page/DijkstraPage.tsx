@@ -31,7 +31,7 @@ const DijkstraPage = () => {
     } else {
       const headerHeight = refHeader.current?.getBoundingClientRect().height;
       setCanvasWidth(window.innerWidth);
-      setCanvasHeight(window.innerHeight - headerHeight! - 5);
+      setCanvasHeight(window.innerHeight - headerHeight! - 40);
     }
   }, [isPc]);
 
