@@ -113,7 +113,8 @@ const useDrawDirection = (): DrawService => {
       const isExistOut = edges.some((edge) => edge.from === k);
       if (!isExistOut) {
         //나가는 간선이 없으면 랜덤한 노드로 연결
-        const randomNode = Math.floor(Math.random() * nodeCount);
+        let randomNode = Math.floor(Math.random() * nodeCount);
+        randomNode = randomNode === k ? randomNode - 1 : randomNode; // 자기 자신과 연결되지 않도록
         const weight = getRandomWeight();
         edges.push({ from: k, to: randomNode, weight: weight });
       }
