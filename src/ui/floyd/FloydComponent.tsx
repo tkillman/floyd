@@ -33,12 +33,8 @@ const FloydComponent = () => {
           for (let a = 0; a < nodeCount; a++) {
             // 도착 노드
             for (let b = 0; b < nodeCount; b++) {
-              // i에서 j로 가는 비용과 i에서 k를 거쳐 j로 가는 비용을 비교하여 더 작은 값을 선택
-              const compareWeight = draft[a][k] + draft[k][b];
-
-              if (draft[a][b] > compareWeight) {
-                draft[a][b] = compareWeight;
-              }
+              // a에서 b로 가는 비용과 a에서 k를 거쳐 b로 가는 비용을 비교하여 더 작은 값을 선택
+              draft[a][b] = Math.min(draft[a][b], draft[a][k] + draft[k][b]);
             }
           }
         }
