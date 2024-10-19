@@ -7,6 +7,7 @@ export interface DrawService {
     ctx: CanvasRenderingContext2D; // canvas 2d context
     canvasWidth: number; // canvas width
     canvasHeight: number; // canvas height
-    nodeCount: number; // node count
+    nodeCount?: number; // node count
+    isNew?: boolean; // is new
   }) => void;
 }

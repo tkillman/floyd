@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import InputComponent from '~/src/ui/InputComponent';
-import useDevice from '~/src/lib/device';
 import FloydComponent from '~/src/ui/floyd/FloydComponent';
 import {
   HeaderArea,
@@ -18,51 +17,35 @@ import CanvasComponent, {
 
 const WelcomePage = () => {
   const refHeader = useRef<HTMLDivElement>(null);
-  //const refInput = useRef<RefInputComponent>(null);
   const refCanvas = useRef<RefCanvasComponent>(null);
+  const [nodeCount, setNodeCount] = useState<number>(0);
 
-  const [canvasWidth, setCanvasWidth] = useState<number>(0);
-  const [canvasHeight, setCanvasHeight] = useState<number>(0);
+  const drawService: DrawService = useDrawNoDirection(nodeCount);
 
-  const { isPc } = useDevice();
-
-  useEffect(() => {
-    if (isPc) {
-      setCanvasWidth(600);
-      setCanvasHeight(600);
-    } else {
-      const headerHeight = refHeader.current?.getBoundingClientRect().height;
-      setCanvasWidth(window.innerWidth);
-      setCanvasHeight(window.innerHeight - headerHeight! - 40); // 5px gap
-    }
-  }, [isPc]);
+  const onChangeCount = (count: number) => {
+    setNodeCount(count);
+  };
 
   const handleDraw = (count: number) => {
-    //const count = refInput.current?.getCount();
-
     if (!count) {
       console.log('count is empty');
       return;
     }
-    refCanvas.current?.draw(count);
+    refCanvas.current?.draw();
   };
-
-  const drawService: DrawService = useDrawNoDirection();
 
   return (
     <PageWrapper>
       <HeaderArea ref={refHeader}>
         <StyledH2>{routePathName(RoutePath.WELCOME)}</StyledH2>
         <InputWrapper>
-          <InputComponent handleDraw={handleDraw} />
+          <InputComponent
+            handleDraw={handleDraw}
+            onChangeCount={onChangeCount}
+          />
         </InputWrapper>
       </HeaderArea>
-      <CanvasComponent
-        ref={refCanvas}
-        canvasWidth={canvasWidth}
-        canvasHeight={canvasHeight}
-        drawService={drawService}
-      />
+      <CanvasComponent ref={refCanvas} drawService={drawService} />
       <FloydComponent />
     </PageWrapper>
   );

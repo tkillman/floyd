@@ -5,7 +5,6 @@ export const PageWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 5px;
-  width: 90vw;
 `;
 
 export const StyledH2 = styled.h2`

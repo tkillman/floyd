@@ -5,7 +5,6 @@ export const MenuComponentWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 90vw;
 `;
 
 export const MenuLi = styled.li`

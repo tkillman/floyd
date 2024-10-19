@@ -9,6 +9,7 @@ import MasterLayout from './ui/common/MasterLayout';
 const LazyWelcomePage = lazy(() => import('~/src/ui/page/WelcomePage')); // 플로이드 워셜 알고리즘(Eazy)
 const LazyFloydPage = lazy(() => import('~/src/ui/page/FloydPage')); // 플로이드 워셜 알고리즘(Real)
 const LazyDijkstraPage = lazy(() => import('~/src/ui/page/DijkstraPage')); // 다익스트라 알고리즘
+const LazyProfessorPage = lazy(() => import('~/src/ui/page/ProfessorPage')); // 교수님
 
 const App = () => {
   return (
@@ -37,6 +38,14 @@ const App = () => {
               element={
                 <Suspense fallback={<Loading />}>
                   <LazyDijkstraPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path={RoutePath.PR}
+              element={
+                <Suspense fallback={<Loading />}>
+                  <LazyProfessorPage />
                 </Suspense>
               }
             />

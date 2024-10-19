@@ -4,20 +4,23 @@ import { Edge } from '~/src/domain/edge.domain';
 import { getRandomWeight } from '~/src/domain/weight.domain';
 import useMatrixService from '../matrix.service';
 
-const useDrawNoDirection = (): DrawService => {
+let edges: Edge[] | undefined = undefined;
+
+const useDrawNoDirection = (nodeCount: number): DrawService => {
   const matrixService = useMatrixService();
 
   const draw: DrawService['draw'] = (param) => {
-    console.log('Draw No direction');
-
-    const { ctx, canvasWidth, canvasHeight, nodeCount } = param;
+    const { ctx, canvasWidth, canvasHeight, isNew } = param;
 
     const radius = canvasWidth / 3; // 노드들이 위치할 원의 반지름
     const centerX = canvasWidth / 2;
     const centerY = canvasHeight / 2;
 
     const nodes: Node[] = [];
-    const edges: Edge[] = [];
+
+    if (isNew) {
+      edges = [];
+    }
 
     // 그래프 지우기
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -31,22 +34,25 @@ const useDrawNoDirection = (): DrawService => {
     }
 
     // 랜덤 간선과 가중치 생성
-    const edgeProbability = 0.5;
-    for (let i = 0; i < nodeCount; i++) {
-      for (let j = 0; j < nodeCount; j++) {
-        if (i === j) {
-          continue;
-        }
+    if (isNew) {
+      // 새로 그리기일 경우
+      const edgeProbability = 0.5;
+      for (let i = 0; i < nodeCount; i++) {
+        for (let j = 0; j < nodeCount; j++) {
+          if (i === j) {
+            continue;
+          }
 
-        const weight = getRandomWeight();
-        if (i === 0) {
-          // 마지막 노드는 무조건 연결
-          edges.push({ from: i, to: j, weight });
-        } else {
-          // 이미 연결된 간선이 있는지 확인
-          const isAlereadyExist = edges.some((edge) => edge.from === i);
-          if (i < j && !isAlereadyExist && Math.random() < edgeProbability) {
-            edges.push({ from: i, to: j, weight });
+          const weight = getRandomWeight();
+          if (i === 0) {
+            // 마지막 노드는 무조건 연결
+            edges?.push({ from: i, to: j, weight });
+          } else {
+            // 이미 연결된 간선이 있는지 확인
+            const isAlereadyExist = edges?.some((edge) => edge.from === i);
+            if (i < j && !isAlereadyExist && Math.random() < edgeProbability) {
+              edges?.push({ from: i, to: j, weight });
+            }
           }
         }
       }
@@ -55,7 +61,8 @@ const useDrawNoDirection = (): DrawService => {
     // 간선 그리기
     ctx.strokeStyle = '#000';
     ctx.font = '16px Arial';
-    edges.forEach((edge) => {
+
+    edges?.forEach((edge) => {
       const { from, to, weight } = edge;
       const fromNode = nodes[from];
       const toNode = nodes[to];
@@ -81,7 +88,9 @@ const useDrawNoDirection = (): DrawService => {
     });
 
     // 간선 정보를 저장
-    matrixService.saveNoDirectionMatrix(nodeCount, edges);
+    if (edges) {
+      matrixService.saveNoDirectionMatrix(nodeCount, edges);
+    }
   };
 
   return {

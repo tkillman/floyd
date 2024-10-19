@@ -1,39 +1,31 @@
-import { forwardRef, useImperativeHandle, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Input } from './common';
 import { InputComponentWrapper } from './InputComponent.style';
 interface Props {
   handleDraw?: (count: number) => void;
-}
-
-export interface RefInputComponent {
-  getCount: () => number;
+  onChangeCount?: (count: number) => void;
 }
 
 const MIN_VALUE = 2;
 const MAX_VALUE = 50;
 
-const InputComponent: React.ForwardRefRenderFunction<
-  RefInputComponent,
-  Props
-> = (props, ref) => {
+const InputComponent: React.FC<Props> = (props) => {
   const [count, setCount] = useState<string>(String(MIN_VALUE));
+
+  useEffect(() => {
+    props.onChangeCount?.(MIN_VALUE);
+  }, []);
 
   const onChangeCount: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.target.value;
-
     if (!value) {
       setCount('');
       return;
     }
 
     setCount(value);
+    props.onChangeCount?.(Number(value));
   };
-
-  useImperativeHandle(ref, () => ({
-    getCount: () => {
-      return Number(count ? count : 0);
-    },
-  }));
 
   const onClickDraw = () => {
     const numCount = Number(count ? count : 0);
@@ -71,4 +63,4 @@ const InputComponent: React.ForwardRefRenderFunction<
   );
 };
 
-export default forwardRef(InputComponent);
+export default InputComponent;

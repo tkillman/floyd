@@ -1,7 +1,8 @@
 export enum RoutePath {
   'WELCOME' = '/',
-  'FL' = '/fl',
-  'DI' = '/di',
+  'FL' = '/fl', // 플로이드워셜
+  'DI' = '/di', // 다익스트라
+  'PR' = '/pr', // 교수님
 }
 
 /**
@@ -21,6 +22,9 @@ export const routePathName = (routePath: RoutePath) => {
       return pathName;
     case RoutePath.DI:
       pathName = '다익스트라 알고리즘';
+      return pathName;
+    case RoutePath.PR:
+      pathName = '플로이드 워셜 알고리즘 풀이';
       return pathName;
 
     default:

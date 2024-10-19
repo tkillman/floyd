@@ -8,7 +8,11 @@ import { Distance } from '~/src/domain/distance.domain';
  * @param title
  * @returns
  */
-export const renderMatrixToTable = (paramMatrix: Matrix, title: string) => {
+export const renderMatrixToTable = (
+  paramMatrix: Matrix,
+  title: string,
+  isShowIndex = false
+) => {
   const nodeCount = paramMatrix.length;
 
   if (nodeCount === 0) {
@@ -19,23 +23,35 @@ export const renderMatrixToTable = (paramMatrix: Matrix, title: string) => {
     <table>
     <tr>
       <th class="diagonal">
-        <span class="top-text">도착</span>  
-        <span class="bottom-text">출발</span>
+        <span class="top-text">도착 b</span>  
+        <span class="bottom-text">출발 a</span>
       </th>`;
 
   for (let i = 0; i < nodeCount; i++) {
-    tableHTML += `<th>${i + 1}</th>`;
+    tableHTML += `<th>${isShowIndex ? i : i + 1}</th>`;
   }
   tableHTML += '</tr>';
 
   // 행 데이터 작성
   for (let i = 0; i < nodeCount; i++) {
-    tableHTML += `<tr><th>${i + 1}</th>`;
+    tableHTML += `<tr><th>${isShowIndex ? i : i + 1}</th>`;
     for (let j = 0; j < nodeCount; j++) {
-      tableHTML += `<td>${
+      tableHTML += `<td>`;
+      tableHTML += '<span style="font-weight: 700;">';
+
+      tableHTML += `${
         paramMatrix[i][j] === Infinity ? '무한' : paramMatrix[i][j]
-      }</td>`;
+      }`;
+
+      tableHTML += '</span>';
+
+      if (isShowIndex) {
+        tableHTML += `<span class="index">  (D[${i}][${j}])</span>`;
+      }
+
+      tableHTML += '</td>';
     }
+
     tableHTML += '</tr>';
   }
 
