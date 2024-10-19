@@ -136,19 +136,8 @@ const useDrawFixDirection = (): DrawService => {
       ctx.fillText(String(index), node.x - 5, node.y + 5);
     });
 
-    const newMatrix = Array.from({ length: nodeCount }, (_, i) =>
-      Array(nodeCount)
-        .fill('')
-        .map((_, j) => (i === j ? 0 : Infinity))
-    );
-
     // 간선 정보를 저장
     if (edges) {
-      for (let i = 0; i < edges.length; i++) {
-        const { from, to, weight } = edges[i];
-        newMatrix[from][to] = weight;
-      }
-
       // 간선 정보를 저장
       matrixService.saveDirectionMatrix(nodeCount, edges);
     }

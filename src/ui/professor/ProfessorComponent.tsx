@@ -78,7 +78,10 @@ const ProfessorComponent = () => {
             1. 이차 배열에 수 담기{' '}
           </p>
           <p>연결선이 있으면 값을 채우고 없으면 무한대를 넣는다.</p>
-          <p>maxtrix : {JSON.stringify(matrix, null, 2)}</p>
+          <p>
+            maxtrix :{' '}
+            {JSON.stringify(matrix, null, 2)?.replace(/null/g, 'Infinity')}
+          </p>
           <div
             dangerouslySetInnerHTML={{
               __html: renderMatrixToTable(matrix, '거리 테이블', true),
