@@ -1,5 +1,5 @@
 import { produce } from 'immer';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { Matrix } from '~/src/domain/matrix.domain';
 import { renderMatrixToTable } from '~/src/lib/dompurifyUtil';
@@ -57,7 +57,7 @@ const ProfessorComponent = () => {
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         width: '100%',
-        padding: '0px 20px',
+        padding: '20px',
         boxSizing: 'border-box',
       }}
     >

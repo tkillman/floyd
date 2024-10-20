@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import CanvasComponent, { RefCanvasComponent } from '../common/CanvasComponent';
 import { PageWrapper } from './common/page.style';
 import useDrawFixDirection from '~/src/application/service/canvas/drawFixDirection.service';
