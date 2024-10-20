@@ -8,12 +8,7 @@ const useDrawFixDirection = (): DrawService => {
   const matrixService = useMatrixService();
 
   const draw: DrawService['draw'] = (param) => {
-    const { ctx, canvasWidth, canvasHeight } = param;
-    console.log('canvasWidth', canvasWidth);
-    console.log('draw', ctx);
-    const radius = canvasWidth / 3; // 노드들이 위치할 원의 반지름
-    const centerX = canvasWidth / 2;
-    const centerY = canvasHeight / 2;
+    const { ctx, canvasWidth, canvasHeight, isNew } = param;
 
     const standX = canvasWidth / 3;
     const nodes: Node[] = [
@@ -135,9 +130,9 @@ const useDrawFixDirection = (): DrawService => {
       // 노드 번호 표시
       ctx.fillText(String(index), node.x - 5, node.y + 5);
     });
-
+    console.log('데이터 저장', isNew);
     // 간선 정보를 저장
-    if (edges) {
+    if (isNew) {
       // 간선 정보를 저장
       matrixService.saveDirectionMatrix(nodeCount, edges);
     }

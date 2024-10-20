@@ -24,7 +24,7 @@ export const routePathName = (routePath: RoutePath) => {
       pathName = '다익스트라 알고리즘';
       return pathName;
     case RoutePath.PR:
-      pathName = '플로이드 워셜 알고리즘 풀이';
+      pathName = '플로이드 워셜 알고리즘(문제풀이)';
       return pathName;
 
     default:
