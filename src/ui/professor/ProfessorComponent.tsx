@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { Matrix } from '~/src/domain/matrix.domain';
 import { renderMatrixToTable } from '~/src/lib/dompurifyUtil';
 import { matrixState } from '~/src/repository/matrix.recoil';
+import FloydComponent from '../floyd/FloydComponent';
 
 const ProfessorComponent = () => {
   const matrix = useRecoilValue(matrixState);
@@ -137,6 +138,9 @@ const ProfessorComponent = () => {
             __html: renderMatrixToTable(floydMatrix, '최단 거리 테이블', true),
           }}
         ></div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <FloydComponent />
+        </div>
       </div>
     </div>
   );
