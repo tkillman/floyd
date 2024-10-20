@@ -1,13 +1,13 @@
 import { useRecoilValue } from 'recoil';
 import { matrixState } from '~/src/repository/matrix.recoil';
 import { Matrix } from '~/src/domain/matrix.domain';
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { produce } from 'immer';
 import { ButtonWrapper, FloydComponentWrapper } from './FloydComponent.style';
 import { Button } from '~/src/ui/common/Button.style';
 import { renderMatrixToTable } from '~/src/lib/dompurifyUtil';
 
-const FloydComponent = () => {
+const FloydComponent: FC<{ isShowIndex?: boolean }> = ({ isShowIndex }) => {
   const matrix = useRecoilValue(matrixState);
   const [floydMatrix, setFloydMatrix] = useState<Matrix>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -58,7 +58,7 @@ const FloydComponent = () => {
     <FloydComponentWrapper>
       <div
         dangerouslySetInnerHTML={{
-          __html: renderMatrixToTable(matrix, '거리 테이블'),
+          __html: renderMatrixToTable(matrix, '거리 테이블', isShowIndex),
         }}
       ></div>
       <ButtonWrapper>
@@ -70,7 +70,11 @@ const FloydComponent = () => {
       {!isLoading && (
         <div
           dangerouslySetInnerHTML={{
-            __html: renderMatrixToTable(floydMatrix, '최단 거리 테이블'),
+            __html: renderMatrixToTable(
+              floydMatrix,
+              '최단 거리 테이블',
+              isShowIndex
+            ),
           }}
         ></div>
       )}

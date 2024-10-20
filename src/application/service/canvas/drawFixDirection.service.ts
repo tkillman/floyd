@@ -90,6 +90,11 @@ const useDrawFixDirection = (): DrawService => {
         to: 2,
         weight: 3,
       },
+      {
+        from: 4,
+        to: 3,
+        weight: 3,
+      },
     ];
 
     // 그래프 지우기

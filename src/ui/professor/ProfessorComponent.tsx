@@ -139,7 +139,7 @@ const ProfessorComponent = () => {
           }}
         ></div>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <FloydComponent />
+          <FloydComponent isShowIndex={true} />
         </div>
       </div>
     </div>
