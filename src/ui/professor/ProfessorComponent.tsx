@@ -104,7 +104,7 @@ const ProfessorComponent = () => {
             >{`for (let b = 0; b < nodeCount; b++) {`}</span>
             <span
               style={{ display: 'block', paddingLeft: '60px' }}
-            >{`draft[a][b] = Math.min(draft[a][b], draft[a][k] + draft[k][b]);`}</span>
+            >{`D[a][b] = Math.min(D[a][b], D[a][k] + D[k][b]);`}</span>
             <span style={{ display: 'block', paddingLeft: '40px' }}>{`}`}</span>
             <span style={{ display: 'block', paddingLeft: '20px' }}>{`}`}</span>
             <span>{`}`}</span>
@@ -122,10 +122,10 @@ const ProfessorComponent = () => {
             1. k = {step.k}, a = {step.a}, b = {step.b}
           </p>
           <p>
-            {`draft[${step.a}][${step.b}] = Math.min(draft[${step.a}][${step.b}], draft[${step.a}][${step.k}] + draft[${step.k}][${step.b}]);`}
+            {`D[${step.a}][${step.b}] = Math.min(D[${step.a}][${step.b}], D[${step.a}][${step.k}] + D[${step.k}][${step.b}]);`}
           </p>
           <p>
-            {`draft[${step.a}][${step.b}] = Math.min(${
+            {`D[${step.a}][${step.b}] = Math.min(${
               floydMatrix?.[step.a]?.[step.b]
             } , ${floydMatrix?.[step.a]?.[step.k]} + ${
               floydMatrix?.[step.k]?.[step.b]
