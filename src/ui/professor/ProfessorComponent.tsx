@@ -5,6 +5,7 @@ import { Matrix } from '~/src/domain/matrix.domain';
 import { renderMatrixToTable } from '~/src/lib/dompurifyUtil';
 import { matrixState } from '~/src/repository/matrix.recoil';
 import FloydComponent from '../floyd/FloydComponent';
+import styled from 'styled-components';
 
 const ProfessorComponent = () => {
   const matrix = useRecoilValue(matrixState);
@@ -63,7 +64,7 @@ const ProfessorComponent = () => {
       }}
     >
       <div style={{ display: 'flex', flexDirection: 'column', rowGap: '50px' }}>
-        <div>
+        <Card>
           <p style={{ fontSize: '20px', fontWeight: 700 }}>
             D[0][2] === 0번 노드에서 2번 노드로 가는 최단거리는?
           </p>
@@ -73,8 +74,8 @@ const ProfessorComponent = () => {
           <p style={{ fontSize: '20px', fontWeight: 700 }}>
             2. 3중 반복문 사용하기{' '}
           </p>
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        </Card>
+        <Card style={{ display: 'flex', flexDirection: 'column' }}>
           <p style={{ fontSize: '20px', fontWeight: 700 }}>
             1. 이차 배열에 수 담기{' '}
           </p>
@@ -88,8 +89,8 @@ const ProfessorComponent = () => {
               __html: renderMatrixToTable(matrix, '거리 테이블', true),
             }}
           ></div>
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        </Card>
+        <Card style={{ display: 'flex', flexDirection: 'column' }}>
           <p style={{ fontSize: '20px', fontWeight: 700 }}>
             2. 3중 반복문 사용하기{' '}
           </p>
@@ -110,8 +111,8 @@ const ProfessorComponent = () => {
             <span style={{ display: 'block', paddingLeft: '20px' }}>{`}`}</span>
             <span>{`}`}</span>
           </p>
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        </Card>
+        <Card style={{ display: 'flex', flexDirection: 'column' }}>
           <p>
             반복문 횟수(N의 3승) :{' '}
             {matrix.length * matrix.length * matrix.length}
@@ -132,18 +133,30 @@ const ProfessorComponent = () => {
               floydMatrix?.[step.k]?.[step.b]
             })`}
           </p>
-        </div>
+        </Card>
         <div
           dangerouslySetInnerHTML={{
             __html: renderMatrixToTable(floydMatrix, '최단 거리 테이블', true),
           }}
         ></div>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <Card
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            borderTop: '10px solid black',
+          }}
+        >
+          <p style={{ fontSize: '30px', fontWeight: 700 }}>정답보기</p>
           <FloydComponent isShowIndex={true} />
-        </div>
+        </Card>
       </div>
     </div>
   );
 };
 
 export default ProfessorComponent;
+
+const Card = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
