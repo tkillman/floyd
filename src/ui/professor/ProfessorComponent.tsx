@@ -6,6 +6,7 @@ import { renderMatrixToTable } from '~/src/lib/dompurifyUtil';
 import { matrixState } from '~/src/repository/matrix.recoil';
 import FloydComponent from '../floyd/FloydComponent';
 import styled from 'styled-components';
+import { Button } from '../common';
 
 const ProfessorComponent = () => {
   const matrix = useRecoilValue(matrixState);
@@ -118,7 +119,10 @@ const ProfessorComponent = () => {
             {matrix.length * matrix.length * matrix.length}
           </p>
           <p style={{ fontSize: '20px', fontWeight: 700 }}>
-            반복문 출발 <button onClick={handleNextStep}>start</button>
+            반복문 출발{' '}
+            <Button onClick={handleNextStep} $primary>
+              Start
+            </Button>
           </p>
           <p>
             1. k = {step.k}, a = {step.a}, b = {step.b}
